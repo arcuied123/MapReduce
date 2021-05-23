@@ -29,7 +29,6 @@ func main() {
 	}
 
 	mapf, reducef := loadPlugin(os.Args[1])
-
 	//
 	// read each input file,
 	// pass it to Map,
@@ -47,6 +46,7 @@ func main() {
 		}
 		file.Close()
 		kva := mapf(filename, string(content))
+		fmt.Println(kva)
 		intermediate = append(intermediate, kva...)
 	}
 
@@ -58,13 +58,14 @@ func main() {
 
 	sort.Sort(ByKey(intermediate))
 
-	oname := "mr-out-0"
+	oname := "mr-out-1"
 	ofile, _ := os.Create(oname)
 
 	//
 	// call Reduce on each distinct key in intermediate[],
 	// and print the result to mr-out-0.
 	//
+	fmt .Println(intermediate)
 	i := 0
 	for i < len(intermediate) {
 		j := i + 1
